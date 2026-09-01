@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GymPulse AI - Connect & Motivate</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body { background-color: #0b0f19; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+  </style>
+</head>
+<body class="pb-24 max-w-md mx-auto min-h-screen border-x border-slate-800 flex flex-col justify-between">
+
+  <!-- Top Navigation Header -->
+  <header class="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-900/90 backdrop-blur sticky top-0 z-20">
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+        <i class="fa-solid fa-dumbbell"></i>
+      </div>
+      <div>
+        <h1 class="text-base font-bold text-white tracking-wide leading-tight">GymPulse AI</h1>
+        <p class="text-[10px] text-emerald-400 font-medium">Smart Gym Network</p>
+      </div>
+    </div>
+    <span class="text-[11px] bg-emerald-950/80 text-emerald-300 border border-emerald-800/60 px-2.5 py-1 rounded-full flex items-center gap-1.5">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Online
+    </span>
+  </header>
+
+  <!-- Main App Content -->
+  <main class="p-4 space-y-5 flex-1">
+    
+    <!-- Daily Motivation Card -->
+    <section class="relative overflow-hidden bg-gradient-to-br from-emerald-950/50 via-slate-900 to-slate-900 p-4 rounded-2xl border border-emerald-700/30 shadow-lg">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-[11px] font-bold text-emerald-400 uppercase tracking-widest flex items-center gap-1.5">
+          <i class="fa-solid fa-bolt text-xs"></i> Motivation Dose
+        </span>
+        <button onclick="getNewQuote()" class="text-slate-400 hover:text-emerald-400 transition text-xs p-1">
+          <i class="fa-solid fa-rotate"></i>
+        </button>
+      </div>
+      <p id="motivation-quote" class="text-xs font-medium text-slate-200 leading-relaxed italic">
+        "The pain you feel today will be the strength you feel tomorrow."
+      </p>
+    </section>
+
+    <!-- Find Gym Buddies Section -->
+    <section>
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Nearby Gym Partners</h2>
+        <span class="text-[11px] text-slate-500">Live feed</span>
+      </div>
+      
+      <div class="space-y-2.5">
+        <!-- Buddy 1 -->
+        <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800/80 flex items-center justify-between hover:border-slate-700 transition">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center font-bold text-sm text-white shadow">
+              R
+            </div>
+            <div>
+              <h3 class="font-semibold text-xs text-slate-100">Rahul Sharma</h3>
+              <p class="text-[11px] text-slate-400 flex items-center gap-1 mt-0.5">
+                <i class="fa-solid fa-location-dot text-[10px] text-emerald-400"></i> Gold's Gym • 6:00 AM
+              </p>
+            </div>
+          </div>
+          <button onclick="connectUser('Rahul')" class="bg-emerald-600 hover:bg-emerald-500 text-[11px] px-3 py-1.5 rounded-lg font-semibold text-white transition active:scale-95 shadow">
+            Connect
+          </button>
+        </div>
+
+        <!-- Buddy 2 -->
+        <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800/80 flex items-center justify-between hover:border-slate-700 transition">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center font-bold text-sm text-white shadow">
+              A
+            </div>
+            <div>
+              <h3 class="font-semibold text-xs text-slate-100">Aman Verma</h3>
+              <p class="text-[11px] text-slate-400 flex items-center gap-1 mt-0.5">
+                <i class="fa-solid fa-location-dot text-[10px] text-blue-400"></i> Anytime Fitness • 7:30 PM
+              </p>
+            </div>
+          </div>
+          <button onclick="connectUser('Aman')" class="bg-emerald-600 hover:bg-emerald-500 text-[11px] px-3 py-1.5 rounded-lg font-semibold text-white transition active:scale-95 shadow">
+            Connect
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Coach & Loneliness Buster Chat -->
+    <section class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg flex flex-col">
+      <div class="flex items-center justify-between mb-2.5 pb-2 border-b border-slate-800/60">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-robot text-emerald-400 text-sm"></i>
+          <h2 class="text-xs font-bold text-slate-300 uppercase tracking-wider">AI Fitness & Life Coach</h2>
+        </div>
+        <span class="text-[10px] text-slate-500 font-mono" id="model-indicator">Multi-Model AI</span>
+      </div>
+
+      <div id="chat-box" class="h-44 overflow-y-auto space-y-2.5 mb-3 text-xs bg-slate-950/80 p-3 rounded-xl border border-slate-800/70">
+        <div class="p-2.5 bg-slate-900 border border-slate-800 rounded-lg text-slate-300">
+          <span class="font-bold text-emerald-400">Coach AI:</span> Gym jane ka man nahi ya routine set karna hai? Mujhse workout, diet ya motivation kuch bhi pucho!
+        </div>
+      </div>
+
+      <form onsubmit="event.preventDefault(); sendMsg();" class="flex gap-2">
+        <input id="user-msg" type="text" placeholder="Ask workout, diet or chat..." class="flex-1 bg-slate-950 border border-slate-700 text-xs px-3.5 py-2.5 rounded-xl focus:outline-none focus:border-emerald-500 text-slate-100 placeholder:text-slate-500">
+        <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 px-4 py-2.5 rounded-xl text-xs font-semibold text-white transition active:scale-95 shadow">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </form>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-slate-900/95 backdrop-blur border-t border-slate-800 py-3 px-8 flex justify-around text-slate-400 text-[11px] z-20">
+    <button class="flex flex-col items-center text-emerald-400 font-semibold gap-1">
+      <i class="fa-solid fa-house text-sm"></i> Home
+    </button>
+    <button class="flex flex-col items-center hover:text-slate-200 transition gap-1">
+      <i class="fa-solid fa-user-group text-sm"></i> Buddies
+    </button>
+    <button class="flex flex-col items-center hover:text-slate-200 transition gap-1">
+      <i class="fa-solid fa-heart-pulse text-sm"></i> Health
+    </button>
+  </nav>
+
+  <!-- Link External JS Engine -->
+  <script src="app.js"></script>
+</body>
+</html>
+
