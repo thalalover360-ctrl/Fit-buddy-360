@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GymPulse AI - Account Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body { background-color: #0b0f19; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+  <div class="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-6">
+    
+    <!-- Logo & Title -->
+    <div class="text-center space-y-2">
+      <div class="w-12 h-12 mx-auto rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30 text-xl">
+        <i class="fa-solid fa-dumbbell"></i>
+      </div>
+      <h1 class="text-lg font-bold text-white tracking-wide">GymPulse Account</h1>
+      <p class="text-xs text-slate-400">Login karke apna gym data aur dosto ko sync karo</p>
+    </div>
+
+    <!-- Quick Social Login -->
+    <div class="space-y-2.5">
+      <button onclick="handleQuickGoogleLogin()" class="w-full bg-slate-800 hover:bg-slate-700/80 border border-slate-700 text-slate-200 text-xs py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 font-medium transition active:scale-95">
+        <i class="fa-brands fa-google text-red-400"></i> Continue with Google
+      </button>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <hr class="flex-1 border-slate-800">
+      <span class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Ya fir Email</span>
+      <hr class="flex-1 border-slate-800">
+    </div>
+
+    <!-- Simple Form -->
+    <form onsubmit="event.preventDefault(); handleCustomLogin();" class="space-y-3.5">
+      <div>
+        <label class="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Aapka Naam</label>
+        <input id="user-name" type="text" required placeholder="e.g. Aman Sharma" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-emerald-500">
+      </div>
+
+      <div>
+        <label class="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Gym Timing</label>
+        <input id="gym-timing" type="text" placeholder="e.g. 6:00 AM / 7:30 PM" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-emerald-500">
+      </div>
+
+      <div>
+        <label class="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Gym Name / Location</label>
+        <input id="gym-name" type="text" placeholder="e.g. Gold's Gym / Sector 4" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-emerald-500">
+      </div>
+
+      <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-semibold text-xs py-2.5 rounded-xl shadow-lg shadow-emerald-950 transition">
+        Login & Launch App <i class="fa-solid fa-arrow-right ml-1"></i>
+      </button>
+    </form>
+
+    <!-- Back to App Link -->
+    <div class="text-center pt-2">
+      <a href="index.html" class="text-xs text-slate-500 hover:text-emerald-400 transition">
+        <i class="fa-solid fa-angle-left mr-1"></i> Bina login ke direct chalao
+      </a>
+    </div>
+
+  </div>
+
+  <script>
+    // Agar pehle se login data ho toh auto-fill kar de
+    window.onload = () => {
+      const saved = JSON.parse(localStorage.getItem("gym_my_profile") || "{}");
+      if (saved.name) document.getElementById("user-name").value = saved.name;
+      if (saved.time) document.getElementById("gym-timing").value = saved.time;
+      if (saved.gym) document.getElementById("gym-name").value = saved.gym;
+    };
+
+    function handleCustomLogin() {
+      const name = document.getElementById("user-name").value.trim();
+      const time = document.getElementById("gym-timing").value.trim() || "6:00 AM";
+      const gym = document.getElementById("gym-name").value.trim() || "Main Gym";
+
+      if (!name) return;
+
+      const profile = { name, time, gym, isLoggedIn: true, loggedInAt: new Date().toISOString() };
+      localStorage.setItem("gym_my_profile", JSON.stringify(profile));
+
+      alert(`Swagat hai ${name}! Login ho gaya.`);
+      window.location.href = "index.html";
+    }
+
+    function handleQuickGoogleLogin() {
+      const dummyName = prompt("Google account ka display name daalo:", "Athlete");
+      if (!dummyName) return;
+
+      const profile = { 
+        name: dummyName, 
+        time: "6:00 AM", 
+        gym: "Anytime Fitness", 
+        isLoggedIn: true, 
+        accountType: "Google" 
+      };
+      localStorage.setItem("gym_my_profile", JSON.stringify(profile));
+
+      alert("Google se login successful!");
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
